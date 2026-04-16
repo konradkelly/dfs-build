@@ -42,6 +42,44 @@ public class Build {
       }
     }
 
+
+
+  /**
+   * Returns the longest word reachable from the given vertex, including its own value.
+   *
+   * @param vertex the starting vertex
+   * @return the longest reachable word, or an empty string if the vertex is null
+   */
+  public static String longestWord(Vertex<String> vertex) {
+    if (vertex == null) return "";
+
+
+    Set<Vertex<String>> seen = new HashSet<>();
+   
+    return longestWord(vertex, seen);
+  }
+
+
+  private static String longestWord(Vertex<String> vertex, Set<Vertex<String>> seen) {
+    if (seen.contains(vertex)) return "";
+
+
+    seen.add(vertex);
+
+
+    String longestWord = vertex.data;
+
+
+    for (Vertex<String> neighbor : vertex.neighbors) {
+      String word = longestWord(neighbor, seen);
+      if (longestWord.length() < word.length()) {
+        longestWord = word;
+      }
+    }
+    return longestWord;
+  }
+
+    
   /**
    * Prints the values of all vertices that are reachable from the given vertex and 
    * have themself as a neighbor.
