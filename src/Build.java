@@ -14,17 +14,33 @@ public class Build {
    * @param k the maximum word length (exclusive)
    */
   public static void printShortWords(Vertex<String> vertex, int k) {
+    if (vertex == null) return;
+   
+    Set<Vertex<String>> seen = new HashSet<>();
+
+
+    printShortWords(vertex, k, seen);
   }
 
-  /**
-   * Returns the longest word reachable from the given vertex, including its own value.
-   *
-   * @param vertex the starting vertex
-   * @return the longest reachable word, or an empty string if the vertex is null
-   */
-  public static String longestWord(Vertex<String> vertex) {
-    return "";
-  }
+
+  private static void printShortWords(Vertex<String> vertex, int k, Set<Vertex<String>> seen) {
+    if (seen.contains(vertex)) return;
+   
+    seen.add(vertex);
+
+
+    String word = vertex.data;
+
+
+    if (word.length() < k) {
+      System.out.println(word);
+    }
+
+
+    for (Vertex<String> airport : vertex.neighbors) {
+        printShortWords(airport, k, seen);
+      }
+    }
 
   /**
    * Prints the values of all vertices that are reachable from the given vertex and 
